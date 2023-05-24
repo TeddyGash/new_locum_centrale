@@ -1,0 +1,51 @@
+{% extends 'base2.html' %}
+
+{% block title %}Locums{% endblock %}
+
+{% block content %}
+<div style="text-align:center; margin: 20px;">
+    <h1 style="font-size: 36px; font-weight: bold; color: #4fd1c5;">Available Locums</h1>
+</div>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    {% for locum in locums %}
+    <div class="col">
+        <div class="card h-100" id="locum_card">
+            <div class="card-header bg-teal-500">
+                <h5 class="card-title" style="color: white;">{{ locum.facility }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted" style="color: white;">{{ locum.location}}</h6>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4"><small>Shift Date:</small></dt>
+                    <dd class="col-sm-8"><small>{{ locum.shift_starts.date }}</small></dd>
+
+                    <dt class="col-sm-4"><small>Time:</small></dt>
+                    <dd class="col-sm-8"><small>{{ locum.shift_starts.time }}</small></dd>
+
+                    <dt class="col-sm-4"><small>Rate/shift:</small></dt>
+                    <dd class="col-sm-8"><small>{{ locum.rate_per_shift }}</small></dd>
+
+                    <dt class="col-sm-4"><small>Additional info:</small></dt>
+                    <dd class="col-sm-8"><small>{{ locum.additional_info }}</small></dd>
+
+                    <dt class="col-sm-4"><small>Contact:</small></dt>
+                    <dd class="col-sm-8"><small>{{ locum.contact }}</small></dd>
+
+                </dl>
+                <div id="figure" class="text-end">
+                    <cite title="Source Title" class="text-end blockquote-footer">posted by {{ locum.posted_by }}</cite>
+                </div>
+                <div>
+                    <a href="#" class="btn btn-primary" id="card_button">Accept</a>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <small class="text-muted">Posted {{ locum.posted_at|timesince }} ago</small>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
