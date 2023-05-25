@@ -1,0 +1,142 @@
+#homepageCarousel {
+  margin: 0px auto;
+  max-width: 80%;
+
+  overflow: hidden;
+  border: 10px solid white;
+  box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+#caption_post {
+  font-size: 2em;
+  font-weight: bold;
+  color: black;
+}
+
+#caption_accept {
+  font-size: 2em;
+  font-weight: bold;
+  color: crimson;
+}
+
+#caption_tele {
+  font-size: 2em;
+  font-weight: bold;
+  color: white;
+}
+
+.container-fluid {
+  margin-bottom: 1.5em;
+}
+
+#captionButton {
+  margin-bottom: 1.5em;
+}
+
+.icon-badge-group .icon-badge-container {
+  display: inline-block;
+  margin-left: 30px;
+}
+
+.icon-badge-group .icon-badge-container:first-child {
+  margin-left: 0;
+}
+
+.icon-badge-container {
+  margin-top: 20px;
+  position: relative;
+}
+
+.icon-badge-icon {
+  font-size: 30px;
+  position: relative;
+}
+
+.icon-badge {
+  background-color: turquoise;
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 35%;
+  position: absolute;
+  /* changed */
+}
+
+#slots_count {
+  top: -7px;
+  left: 60px;
+}
+
+#tele_count {
+  top: -7px;
+  left: 100px;
+}
+
+#logo_and_name {
+  display: inline-block;
+}
+
+.name {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.card-title {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.card-subtitle {
+  font-size: small;
+  color: aliceblue;
+}
+
+#card_button {
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: -7px;
+  display: block;
+  width: 40%;
+  background-color: #4fd1c5;
+  border-color: transparent;
+}
+
+#card_button:hover {
+  background-color: #047481;
+}
+
+#figure {
+  margin-top: 10px;
+}
+
+#locum_card {
+  border: 1px solid #000000;
+}
+
+#locum_card:hover {
+  border-color: #009688;
+}
+
+.carousel-inner {
+  /* Smaller than standard 960 (devices and browsers) */
+  @media only screen and (max-width: 959px) {
+  }
+
+  /* Tablet Portrait size to standard 960 (devices and browsers) */
+  @media only screen and (min-width: 768px) and (max-width: 959px) {
+  }
+
+  /* All Mobile Sizes (devices and browser) */
+  @media only screen and (max-width: 767px) {
+  }
+
+  /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+  @media only screen and (min-width: 480px) and (max-width: 767px) {
+  }
+
+  /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+  @media only screen and (max-width: 479px) {
+  }
+}
