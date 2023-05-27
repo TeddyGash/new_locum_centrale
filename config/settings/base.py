@@ -77,7 +77,8 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "newlocumcentrale.users",
+    "newlocumcentrale.apps.users",
+    "newlocumcentrale.apps.slots",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -179,7 +180,7 @@ TEMPLATES = [
                 "django.template.context_processors.static",
                 "django.template.context_processors.tz",
                 "django.contrib.messages.context_processors.messages",
-                "newlocumcentrale.users.context_processors.allauth_settings",
+                "newlocumcentrale.apps.users.context_processors.allauth_settings",
             ],
         },
     }
@@ -292,13 +293,13 @@ ACCOUNT_EMAIL_REQUIRED = True
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-ACCOUNT_ADAPTER = "newlocumcentrale.users.adapters.AccountAdapter"
+ACCOUNT_ADAPTER = "newlocumcentrale.apps.users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/forms.html
-ACCOUNT_FORMS = {"signup": "newlocumcentrale.users.forms.UserSignupForm"}
+ACCOUNT_FORMS = {"signup": "newlocumcentrale.apps.users.forms.UserSignupForm"}
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
-SOCIALACCOUNT_ADAPTER = "newlocumcentrale.users.adapters.SocialAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "newlocumcentrale.apps.users.adapters.SocialAccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/forms.html
-SOCIALACCOUNT_FORMS = {"signup": "newlocumcentrale.users.forms.UserSocialSignupForm"}
+SOCIALACCOUNT_FORMS = {"signup": "newlocumcentrale.apps.users.forms.UserSocialSignupForm"}
 # django-compressor
 # ------------------------------------------------------------------------------
 # https://django-compressor.readthedocs.io/en/latest/quickstart/#installation

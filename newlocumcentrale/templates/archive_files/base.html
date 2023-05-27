@@ -11,9 +11,6 @@
         crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-examplehash" crossorigin="anonymous" />
-    <meta name="description" content="An online platform that connects doctors to locums and locums to doctors as well as connects clients to doctors through teleconsults.">
-    <meta name="author" content="Theodore Amegashie">
     {% load static %}
     <link href="{% static 'css/app.css' %}" rel="stylesheet">
     <link rel="icon" href="{% static 'images/search_doctor.jpeg' %}">
@@ -35,37 +32,24 @@
         <!--upper-right nav-bar-->
         <div class="icon-badge-group">
             <div class="icon-badge-container">
-                <a href="{% url 'slots:locums' %}" class="text-lg font-semibold hover:text-gray-500">Locums</a>
+                <a href="#" class="text-lg font-semibold hover:text-gray-500">Locums</a>
                 <div class="icon-badge" id="slots_count">{{ locums.count }}</div>
             </div>
             <div class="icon-badge-container">
-                <a href="{% url 'slots:teleconsults' %}"
+                <a href="#"
                     class="text-lg font-semibold hover:text-gray-500">Teleconsults</a>
                 <div class="icon-badge" id="tele_count">{{ teleconsults.count }}</div>
             </div>
-            {% if request.user.is_authenticated %}
             <div class="icon-badge-container">
-                <a href="{% url 'users:detail' request.user.username %}"
-                    class="px-6 py-3 text-lg font-semi-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700">My Profile</a>
+                <a href="#"
+                    class="px-6 py-3 text-lg font-semi-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign
+                    Up</a>
             </div>
             <div class="icon-badge-container">
-                <a href="{% url 'account_logout' %}"
-                    class="px-6 py-3 text-lg font-semi-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign Out</a>
+                <a href="#"
+                    class="px-6 py-3 text-lg font-semi-bold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log
+                    In</a>
             </div>
-            {% else %}
-                {% if ACCOUNT_ALLOW_REGISTRATION %}
-                <div class="icon-badge-container">
-                    <a href="{% url 'account_signup' %}"
-                        class="px-6 py-3 text-lg font-semi-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign
-                        Up</a>
-                </div>
-                <div class="icon-badge-container">
-                    <a href="{% url 'account_login' %}"
-                        class="px-6 py-3 text-lg font-semi-bold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log
-                        In</a>
-                </div>
-                {% endif %}
-            {% endif %}
         </div>
     </nav>
     <div class="px-6 py-6">

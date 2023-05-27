@@ -8,10 +8,10 @@ from django.http import HttpRequest, HttpResponseRedirect
 from django.test import RequestFactory
 from django.urls import reverse
 
-from newlocumcentrale.users.forms import UserAdminChangeForm
-from newlocumcentrale.users.models import User
-from newlocumcentrale.users.tests.factories import UserFactory
-from newlocumcentrale.users.views import UserRedirectView, UserUpdateView, user_detail_view
+from newlocumcentrale.apps.users.forms import UserAdminChangeForm
+from newlocumcentrale.apps.users.models import User
+from newlocumcentrale.apps.users.tests.factories import UserFactory
+from newlocumcentrale.apps.users.views import UserRedirectView, UserUpdateView, user_detail_view
 
 pytestmark = pytest.mark.django_db
 

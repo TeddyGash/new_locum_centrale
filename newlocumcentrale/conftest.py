@@ -1,7 +1,7 @@
 import pytest
 
-from newlocumcentrale.users.models import User
-from newlocumcentrale.users.tests.factories import UserFactory
+from newlocumcentrale.apps.users.models import User
+from newlocumcentrale.apps.users.tests.factories import UserFactory
 
 
 @pytest.fixture(autouse=True)
