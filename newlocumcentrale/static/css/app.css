@@ -140,3 +140,41 @@
   @media only screen and (max-width: 479px) {
   }
 }
+
+button.btn.btn-primary.btn-teal {
+  background-color: #319795;
+  color: #fff;
+}
+
+.btn-teal:hover {
+  background-color: #1a4c50;
+}
+
+.text-blue {
+  color: #3182ce;
+}
+
+.text-blue:hover {
+  color: #4a5568;
+}
+
+/* Custom CSS for user profile */
+.avatar-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 14px;
+  color: #888;
+  margin-top: 5px;
+}
+
+/* Add more custom styles as needed */

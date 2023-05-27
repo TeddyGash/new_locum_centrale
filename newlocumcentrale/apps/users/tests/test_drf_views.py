@@ -1,8 +1,8 @@
 import pytest
 from rest_framework.test import APIRequestFactory
 
-from newlocumcentrale.users.api.views import UserViewSet
-from newlocumcentrale.users.models import User
+from newlocumcentrale.apps.users.api.views import UserViewSet
+from newlocumcentrale.apps.users.models import User
 
 
 class TestUserViewSet:

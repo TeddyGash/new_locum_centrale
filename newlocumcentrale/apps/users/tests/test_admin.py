@@ -1,6 +1,6 @@
 from django.urls import reverse
 
-from newlocumcentrale.users.models import User
+from newlocumcentrale.apps.users.models import User
 
 
 class TestUserAdmin:

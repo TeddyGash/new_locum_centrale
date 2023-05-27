@@ -1,6 +1,6 @@
 from django.urls import resolve, reverse
 
-from newlocumcentrale.users.models import User
+from newlocumcentrale.apps.users.models import User
 
 
 def test_user_detail(user: User):

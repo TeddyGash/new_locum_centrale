@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">{{ request.user.username }}</div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                {% if request.user.email %}
+                  <img src="{% static 'images/unisex-avatar.jpeg' %}" alt="Avatar" class="avatar-img">
+                {% else %}
+                  <i class="fas fa-user-circle fa-5x"></i>
+                {% endif %}
+              </div>
+              <div class="col-md-8">
+                <h5 class="card-title">{{ request.user.name }}</h5>
+                <p class="card-text">Email: {{ request.user.email }}</p>
+                <!-- Add more user details as needed -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
