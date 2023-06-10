@@ -8,6 +8,7 @@ class UsersConfig(AppConfig):
 
     def ready(self):
         try:
-            import newlocumcentrale.apps.users.signals  # noqa: F401
+            pass
+            # import newlocumcentrale.apps.users.signals  # noqa: F401
         except ImportError:
             pass
