@@ -1,6 +1,11 @@
-from django.shortcuts import render  # get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render  # get_object_or_404
+from django.utils.decorators import method_decorator
 from django.views import View
 
+from config.settings.base import LOGIN_URL
+
+from .locum_form import LocumForm
 from .models import Locum, Teleconsults
 
 
@@ -30,3 +35,19 @@ class TeleconsultView(View):
                 "teleconsults": teleconsults,
             },
         )
+
+
+class LocumCreateView(View):
+    def get(self, request):
+        form = LocumForm()
+        return render(request, "slots/post_locum.html", {"form": form})
+
+    @method_decorator(login_required(login_url=LOGIN_URL))
+    def post(self, request):
+        form = LocumForm(request.POST)
+        if form.is_valid():
+            locum = form.save(commit=False)
+            locum.posted_by = request.user
+            locum.save()
+            return redirect("/slots/locums")  # Redirect to a success page or locum list view
+        return render(request, "slots/post_locum.html", {"form": form})

@@ -1,50 +1,68 @@
-// signup.js
-
 var registerAsField = document.getElementById(
   '{{ form.register_as.id_for_label }}',
 );
 var mdcRegistrationField = document.getElementById('mdc-registration-no-field');
+var signupForm = document.getElementById('signup_form');
+var signupButton = document.getElementById('signup_button');
+var verificationStatus = document.getElementById('verification_status');
+var verificationText = document.getElementById('verification_text');
 
-mdcRegistrationField.style.display = 'none';
-
-registerAsField.addEventListener('change', function () {
-  var selectedOption = registerAsField.value;
-  if (selectedOption === 'doctor' || selectedOption === 'pa') {
+function toggleMdcRegistrationField() {
+  if (registerAsField.value === 'doctor' || registerAsField.value === 'pa') {
     mdcRegistrationField.style.display = 'block';
   } else {
     mdcRegistrationField.style.display = 'none';
   }
-});
+}
 
-// Trigger the change event initially to set the initial visibility correctly
-registerAsField.dispatchEvent(new Event('change'));
+registerAsField.addEventListener('change', toggleMdcRegistrationField);
+toggleMdcRegistrationField();
 
-// $(document).ready(function() {
-//     var registerAsField = $('#id_register_as');
-//     var mdcRegistrationNoField = $('#id_mdc_registration_no');
+function verifyFormFields() {
+  var firstName = $('#id_first_name').val();
+  var lastName = $('#id_last_name').val();
+  var category = $('#id_register_as').val();
+  var mdcNumber = $('#mdc-registration-no-field').val();
+  var fullName = firstName + ' ' + lastName;
 
-//     function toggleMdcRegistrationNoField() {
-//       var selectedValue = registerAsField.val();
-//       if (selectedValue === 'doctor' || selectedValue === 'pa') {
-//         mdcRegistrationNoField.parent().show();
-//       } else {
-//         mdcRegistrationNoField.parent().hide();
-//       }
-//     }
+  if ((category === 'doctor' || category === 'pa') && fullName && mdcNumber) {
+    verificationStatus.style.display = 'block';
+    verificationText.innerText = 'Verifying...';
+    signupButton.disabled = true;
 
-//     toggleMdcRegistrationNoField();
-//     registerAsField.change(toggleMdcRegistrationNoField);
-//   });
+    $.ajax({
+      url: "{% url 'users:verify_mdc_details' %}",
+      type: 'POST',
+      data: {
+        full_name: fullName,
+        category: category,
+        mdc_number: mdcNumber,
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+      },
+      success: function (response) {
+        verificationText.innerText = response.message;
+        if (response.verified) {
+          signupButton.disabled = false;
+        } else {
+          signupButton.disabled = true;
+        }
+      },
+      error: function (xhr, status, error) {
+        verificationText.innerText = 'An error occurred during verification.';
+        console.error(error);
+        signupButton.disabled = true;
+      },
+      complete: function () {
+        signupForm.submit(); // Submit the form after verification is complete
+      },
+    });
+  } else {
+    verificationStatus.style.display = 'none';
+    signupButton.disabled = true;
+  }
+}
 
-//   $("register-as-field").change(function() {
-//     if ($(this).val() == "doctor" || $(this).val() == "pa") {
-//       $('#mdc-registration-no-field').show();
-//       $('#mdc-registration-no-field').attr('required', '');
-//       $('#mdc-registration-no-field').attr('data-error', 'This field is required.');
-//     } else {
-//       $('#mdc-registration-no-field').hide();
-//       $('#mdc-registration-no-field').removeAttr('required');
-//       $('#mdc-registration-no-field').removeAttr('data-error');
-//     }
-//   });
-//   $("#register-as-field").trigger("change");
+$(
+  '#id_first_name, #id_last_name, #id_register_as, #mdc-registration-no-field',
+).on('input', verifyFormFields);
+verifyFormFields();

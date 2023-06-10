@@ -3,7 +3,7 @@ import django.contrib.auth.validators
 from django.db import migrations, models
 import django.utils.timezone
 
-import newlocumcentrale.apps.users.models
+# import newlocumcentrale.apps.users.models
 
 
 class Migration(migrations.Migration):
