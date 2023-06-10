@@ -5,7 +5,7 @@ from django.views import View
 
 from config.settings.base import LOGIN_URL
 
-from .locum_form import LocumForm
+from .forms import LocumForm, TeleconsultForm
 from .models import Locum, Teleconsults
 
 
@@ -51,3 +51,19 @@ class LocumCreateView(View):
             locum.save()
             return redirect("/slots/locums")  # Redirect to a success page or locum list view
         return render(request, "slots/post_locum.html", {"form": form})
+
+
+class TeleconsultCreateView(View):
+    def get(self, request):
+        form = TeleconsultForm()
+        return render(request, "slots/post_teleconsult.html", {"form": form})
+
+    @method_decorator(login_required(login_url=LOGIN_URL))
+    def post(self, request):
+        form = TeleconsultForm(request.POST)
+        if form.is_valid():
+            locum = form.save(commit=False)
+            locum.posted_by = request.user
+            locum.save()
+            return redirect("/slots/teleconsults")  # Redirect to a success page or locum list view
+        return render(request, "slots/post_teleconsult.html", {"form": form})
