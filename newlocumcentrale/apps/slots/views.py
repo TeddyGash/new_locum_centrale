@@ -40,30 +40,70 @@ class TeleconsultView(View):
 class LocumCreateView(View):
     def get(self, request):
         form = LocumForm()
-        return render(request, "slots/post_locum.html", {"form": form})
+        locums = Locum.objects.filter(is_available=True)
+        teleconsults = Teleconsults.objects.filter(is_available=True)
+        return render(
+            request,
+            "slots/post_locum.html",
+            {
+                "form": form,
+                "locums": locums,
+                "teleconsults": teleconsults,
+            },
+        )
 
     @method_decorator(login_required(login_url=LOGIN_URL))
     def post(self, request):
         form = LocumForm(request.POST)
+        locums = Locum.objects.filter(is_available=True)
+        teleconsults = Teleconsults.objects.filter(is_available=True)
         if form.is_valid():
             locum = form.save(commit=False)
             locum.posted_by = request.user
             locum.save()
             return redirect("/slots/locums")  # Redirect to a success page or locum list view
-        return render(request, "slots/post_locum.html", {"form": form})
+        return render(
+            request,
+            "slots/post_locum.html",
+            {
+                "form": form,
+                "locums": locums,
+                "teleconsults": teleconsults,
+            },
+        )
 
 
 class TeleconsultCreateView(View):
     def get(self, request):
         form = TeleconsultForm()
-        return render(request, "slots/post_teleconsult.html", {"form": form})
+        locums = Locum.objects.filter(is_available=True)
+        teleconsults = Teleconsults.objects.filter(is_available=True)
+        return render(
+            request,
+            "slots/post_teleconsult.html",
+            {
+                "form": form,
+                "locums": locums,
+                "teleconsults": teleconsults,
+            },
+        )
 
     @method_decorator(login_required(login_url=LOGIN_URL))
     def post(self, request):
         form = TeleconsultForm(request.POST)
+        locums = Locum.objects.filter(is_available=True)
+        teleconsults = Teleconsults.objects.filter(is_available=True)
         if form.is_valid():
             locum = form.save(commit=False)
             locum.posted_by = request.user
             locum.save()
             return redirect("/slots/teleconsults")  # Redirect to a success page or locum list view
-        return render(request, "slots/post_teleconsult.html", {"form": form})
+        return render(
+            request,
+            "slots/post_teleconsult.html",
+            {
+                "form": form,
+                "locums": locums,
+                "teleconsults": teleconsults,
+            },
+        )

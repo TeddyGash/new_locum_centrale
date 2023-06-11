@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-examplehash" crossorigin="anonymous" />
     <meta name="description" content="An online platform that connects doctors to locums and locums to doctors as well as connects clients to doctors through teleconsults.">
     <meta name="author" content="Theodore Amegashie">
+
+    <script src="https://kit.fontawesome.com/b7b6c15892.js" crossorigin="anonymous"></script>
+
     {% load static %}
     <link href="{% static 'css/app.css' %}" rel="stylesheet">
     <link rel="icon" href="{% static 'images/search_doctor.jpeg' %}">
@@ -43,28 +46,39 @@
                     class="text-lg font-semibold hover:text-gray-500">Teleconsults</a>
                 <div class="icon-badge" id="tele_count">{{ teleconsults.count }}</div>
             </div>
+
             {% if request.user.is_authenticated %}
-            <div class="icon-badge-container">
-                <a href="{% url 'users:detail' request.user.username %}"
-                    class="px-6 py-3 text-lg font-semi-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700">My Profile</a>
-            </div>
-            <div class="icon-badge-container">
-                <a href="{% url 'account_logout' %}"
-                    class="px-6 py-3 text-lg font-semi-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign Out</a>
-            </div>
+                <div class="icon-badge-container">
+                    <div class="dropdown">
+                        <!-- <a class="dropdown-toggle" id="postJobDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Post Job
+                        </a> -->
+                        <div id="postJobDropdown" data-bs-toggle="dropdown">
+                            <a href="#"
+                                class="px-6 py-3 text-lg font-semi-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Post Job</a>
+                        </div>
+                        <ul class="dropdown-menu" aria-labelledby="postJobDropdown">
+                            <li><a class="dropdown-item" href="{% url 'slots:post_locum' %}">Post Locum</a></li>
+                            <li><a class="dropdown-item" href="{% url 'slots:post_teleconsult' %}">Post Teleconsult</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="icon-badge-container">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle avatar-icon"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{% url 'users:detail' request.user.username %}">My Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'account_logout' %}">Log out</a></li>
+                        </ul>
+                    </div>
+                </div>
             {% else %}
-                {% if ACCOUNT_ALLOW_REGISTRATION %}
                 <div class="icon-badge-container">
-                    <a href="{% url 'account_signup' %}"
-                        class="px-6 py-3 text-lg font-semi-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign
-                        Up</a>
+                    <a href="{% url 'account_login' %}" class="px-6 py-3 text-lg font-semi-bold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log In</a>
                 </div>
-                <div class="icon-badge-container">
-                    <a href="{% url 'account_login' %}"
-                        class="px-6 py-3 text-lg font-semi-bold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log
-                        In</a>
-                </div>
-                {% endif %}
             {% endif %}
         </div>
     </nav>

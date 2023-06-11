@@ -7,6 +7,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.generic import DetailView, RedirectView, UpdateView
 
+from newlocumcentrale.apps.slots.models import Locum, Teleconsults
+
 from .verification_script import verify_mdc_details
 
 User = get_user_model()
@@ -17,6 +19,14 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     slug_field = "username"
     slug_url_kwarg = "username"
     template_name = "account/user_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        locums = Locum.objects.filter(is_available=True)
+        teleconsults = Teleconsults.objects.filter(is_available=True)
+        context["locums"] = locums
+        context["teleconsults"] = teleconsults
+        return context
 
 
 # class UserDetailView(LoginRequiredMixin, DetailView):
