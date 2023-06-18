@@ -19,11 +19,15 @@ class UserDetailView(LoginRequiredMixin, DetailView):
     slug_field = "username"
     slug_url_kwarg = "username"
     template_name = "account/user_detail.html"
+    # context_object_name = "user"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        user = self.get_object()
         locums = Locum.objects.filter(is_available=True)
         teleconsults = Teleconsults.objects.filter(is_available=True)
+        # context["first_name"] = user.first_name
+        context["user"] = user
         context["locums"] = locums
         context["teleconsults"] = teleconsults
         return context
@@ -36,6 +40,29 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 
 user_detail_view = UserDetailView.as_view()
+
+# class UserDetailView(LoginRequiredMixin, DetailView):
+#     model = User
+#     slug_field = "username"
+#     slug_url_kwarg = "username"
+#     template_name = "account/user_detail.html"
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         locums = Locum.objects.filter(is_available=True)
+#         teleconsults = Teleconsults.objects.filter(is_available=True)
+#         context["locums"] = locums
+#         context["teleconsults"] = teleconsults
+#         return context
+
+
+# # class UserDetailView(LoginRequiredMixin, DetailView):
+# #     model = User
+# #     slug_field = "username"
+# #     slug_url_kwarg = "username"
+
+
+# user_detail_view = UserDetailView.as_view()
 
 
 class UserUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):

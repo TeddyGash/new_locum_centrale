@@ -158,7 +158,7 @@ button.btn.btn-primary.btn-teal {
   color: #4a5568;
 }
 
-/* Custom CSS for user profile */
+/* Custom CSS for user profile card*/
 .avatar-img {
   width: 150px;
   height: 150px;
@@ -169,16 +169,65 @@ button.btn.btn-primary.btn-teal {
 .card-title {
   font-size: 18px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .card-text {
   font-size: 14px;
   color: #888;
-  margin-top: 5px;
+  margin-top: 10px;
 }
 
-/* Add more custom styles as needed */
+.custom-card-width {
+  width: 160%;
+}
 
+.label-bold {
+  font-weight: bold;
+  text-align: right;
+}
+
+/* Navbar avatar */
 .avatar-icon {
-  font-size: 24px; /* Adjust the size as desired */
+  font-size: 30px; /* Adjust the size as desired */
+}
+
+.user-avatar {
+  font-size: 160px; /* Adjust the size as desired */
+}
+
+/* .edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #888;
+}
+
+.edit-icon:hover {
+  color: #4a5568;
+} */
+
+.edit-icon {
+  position: absolute;
+  color: #888;
+  top: 10px;
+  right: 10px;
+}
+
+.edit-icon::after {
+  content: 'Edit profile';
+  position: absolute;
+  top: -20px;
+  right: 0;
+  background-color: #4a5568;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: x-small;
+}
+
+.edit-icon:hover::after {
+  opacity: 1;
 }

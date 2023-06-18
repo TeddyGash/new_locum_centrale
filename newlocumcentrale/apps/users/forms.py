@@ -92,6 +92,7 @@ class UserSignupForm(SignupForm):
         user.last_name = self.cleaned_data["last_name"]
         user.username = self.cleaned_data["username"]
         user.email = self.cleaned_data["email"]
+        user.register_as = self.cleaned_data["register_as"]
         user.mdc_registration_no = self.cleaned_data["mdc_registration_no"]
         user.save()
         return user
