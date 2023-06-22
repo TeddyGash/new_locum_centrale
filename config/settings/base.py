@@ -150,6 +150,7 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
+CUSTOM_LIGHT_GREEN = "#4fd1c5"
 
 # MEDIA
 # ------------------------------------------------------------------------------
@@ -185,6 +186,8 @@ TEMPLATES = [
         },
     }
 ]
+
+# CUSTOM_GREEN = "#319795"
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#form-renderer
 FORM_RENDERER = "django.forms.renderers.TemplatesSetting"

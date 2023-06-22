@@ -1,27 +1,35 @@
+/* definition of CUSTOM_LIGHT_GREEN variable */
+:root {
+  /* Primary color name: mediumaquamarine */
+  --primary-teal: #66cc99;
+  --hover-teal: #299676;
+  --extra-light-teal: #9fffe1;
+  --primary-500: ##66cdaa;
+}
+
 #homepageCarousel {
   margin: 0px auto;
   max-width: 80%;
-
   overflow: hidden;
   border: 10px solid white;
   box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.4);
 }
 
-#caption_post {
+/* Homepage carousel captions */
+.caption_base {
   font-size: 2em;
   font-weight: bold;
+}
+
+#caption_post {
   color: black;
 }
 
 #caption_accept {
-  font-size: 2em;
-  font-weight: bold;
   color: crimson;
 }
 
 #caption_tele {
-  font-size: 2em;
-  font-weight: bold;
   color: white;
 }
 
@@ -29,8 +37,59 @@
   margin-bottom: 1.5em;
 }
 
+/* Button on homepage carousels */
 #captionButton {
   margin-bottom: 1.5em;
+  margin-top: -5px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  width: 30%;
+}
+
+.carousel-inner {
+  /* Smaller than standard 960 (devices and browsers) */
+  @media only screen and (max-width: 959px) {
+  }
+
+  /* Tablet Portrait size to standard 960 (devices and browsers) */
+  @media only screen and (min-width: 768px) and (max-width: 959px) {
+  }
+
+  /* All Mobile Sizes (devices and browser) */
+  @media only screen and (max-width: 767px) {
+  }
+
+  /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+  @media only screen and (min-width: 480px) and (max-width: 767px) {
+  }
+
+  /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+  @media only screen and (max-width: 479px) {
+  }
+}
+
+/* navbar buttons */
+/* class="px-6 py-3 text-lg font-semi-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700" */
+.customButtonsBase {
+  margin-bottom: 1.5em;
+  margin-top: -5px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 10px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  width: 1.5rem;
+}
+
+#post-job-button {
+  background-color: var(--primary-teal);
 }
 
 .icon-badge-group .icon-badge-container {
@@ -93,19 +152,20 @@
   color: aliceblue;
 }
 
-#card_button {
+/* locum & teleconsult card button */
+/* #card_button {
   margin: 0 auto;
   margin-top: 10px;
   margin-bottom: -7px;
   display: block;
   width: 40%;
-  background-color: #4fd1c5;
+  background-color: var(--primary-teal);
   border-color: transparent;
 }
 
 #card_button:hover {
-  background-color: #047481;
-}
+  background-color: var(--hover-teal);
+} */
 
 #figure {
   margin-top: 10px;
@@ -119,37 +179,29 @@
   border-color: #009688;
 }
 
-.carousel-inner {
-  /* Smaller than standard 960 (devices and browsers) */
-  @media only screen and (max-width: 959px) {
-  }
+/* ****CUSTOM BUTTONS**** */
 
-  /* Tablet Portrait size to standard 960 (devices and browsers) */
-  @media only screen and (min-width: 768px) and (max-width: 959px) {
-  }
-
-  /* All Mobile Sizes (devices and browser) */
-  @media only screen and (max-width: 767px) {
-  }
-
-  /* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
-  @media only screen and (min-width: 480px) and (max-width: 767px) {
-  }
-
-  /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-  @media only screen and (max-width: 479px) {
-  }
-}
-
-button.btn.btn-primary.btn-teal {
-  background-color: #319795;
+/* Used at:
+- locums
+- teleconsults
+- sign up
+- log in */
+.btn.btn-primary.btn-primary {
+  background-color: var(--primary-teal);
   color: #fff;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: -7px;
+  display: block;
+  width: 40%;
+  border-color: transparent;
 }
 
-.btn-teal:hover {
-  background-color: #1a4c50;
+.btn.btn-primary.btn-primary:hover {
+  background-color: var(--hover-teal);
 }
 
+/* *****Signup Hyperlink***** */
 .text-blue {
   color: #3182ce;
 }
@@ -158,55 +210,19 @@ button.btn.btn-primary.btn-teal {
   color: #4a5568;
 }
 
-/* Custom CSS for user profile card*/
-.avatar-img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.card-title {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.card-text {
-  font-size: 14px;
-  color: #888;
-  margin-top: 10px;
-}
-
-.custom-card-width {
-  width: 160%;
-}
-
-.label-bold {
-  font-weight: bold;
-  text-align: right;
-}
-
 /* Navbar avatar */
 .avatar-icon {
-  font-size: 30px; /* Adjust the size as desired */
+  font-size: 30px;
 }
 
+/* ****USER PROFILE****** */
+
+/* User Profile Avatar */
 .user-avatar {
-  font-size: 160px; /* Adjust the size as desired */
+  font-size: 160px;
 }
 
-/* .edit-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #888;
-}
-
-.edit-icon:hover {
-  color: #4a5568;
-} */
-
+/* User Profile edit icon */
 .edit-icon {
   position: absolute;
   color: #888;
@@ -231,3 +247,32 @@ button.btn.btn-primary.btn-teal {
 .edit-icon:hover::after {
   opacity: 1;
 }
+
+.avatar-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 14px;
+  color: #888;
+  margin-top: 10px;
+}
+
+.card-width {
+  width: 160%;
+}
+
+.label-bold {
+  font-weight: bold;
+  text-align: right;
+}
+/* End of: ****USER PROFILE****** */
