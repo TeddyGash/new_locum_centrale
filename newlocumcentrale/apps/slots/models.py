@@ -18,6 +18,9 @@ class Locum(models.Model):
     is_available = models.BooleanField(default=True)
     additional_info = models.TextField(blank=True, null=True)
     posted_by = models.ForeignKey(AUTH_USER_MODEL, related_name="locums", on_delete=models.CASCADE)
+    accepted_by = models.ForeignKey(
+        AUTH_USER_MODEL, null=True, blank=True, related_name="locum_accepted", on_delete=models.SET_NULL
+    )
     posted_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -36,6 +39,9 @@ class Teleconsults(models.Model):
     is_available = models.BooleanField(default=True)
     additional_info = models.TextField(blank=True, null=True)
     posted_by = models.ForeignKey(AUTH_USER_MODEL, related_name="teleconsults", on_delete=models.CASCADE)
+    accepted_by = models.ForeignKey(
+        AUTH_USER_MODEL, null=True, blank=True, related_name="teleconsult_accepted", on_delete=models.SET_NULL
+    )
     posted_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

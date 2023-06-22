@@ -1,27 +1,51 @@
+/* definition of CUSTOM_LIGHT_GREEN variable */
+:root {
+  /* Primary color name: mediumaquamarine */
+  --primary-teal: #66cc99;
+  --hover-teal: #299676;
+  --extra-light-teal: #9fffe1;
+  --primary-gray: #767676;
+  --deeper-gray: #999999;
+  --hyper-blue: #3182ce;
+}
+
+/* WEBSITE NAME AND LOGO */
+.name {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.name:hover {
+  color: var(--primary-teal);
+}
+
+#logo_and_name {
+  display: inline-block;
+}
+
 #homepageCarousel {
   margin: 0px auto;
   max-width: 80%;
-
   overflow: hidden;
   border: 10px solid white;
   box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.4);
 }
 
-#caption_post {
+/* Homepage carousel captions */
+.caption_base {
   font-size: 2em;
   font-weight: bold;
+}
+
+#caption_post {
   color: black;
 }
 
 #caption_accept {
-  font-size: 2em;
-  font-weight: bold;
   color: crimson;
 }
 
 #caption_tele {
-  font-size: 2em;
-  font-weight: bold;
   color: white;
 }
 
@@ -29,94 +53,18 @@
   margin-bottom: 1.5em;
 }
 
+/* Button on homepage carousels */
 #captionButton {
   margin-bottom: 1.5em;
-}
-
-.icon-badge-group .icon-badge-container {
-  display: inline-block;
-  margin-left: 30px;
-}
-
-.icon-badge-group .icon-badge-container:first-child {
-  margin-left: 0;
-}
-
-.icon-badge-container {
-  margin-top: 20px;
-  position: relative;
-}
-
-.icon-badge-icon {
-  font-size: 30px;
-  position: relative;
-}
-
-.icon-badge {
-  background-color: turquoise;
-  font-size: 12px;
-  color: white;
-  text-align: center;
-  width: 20px;
-  height: 20px;
-  border-radius: 35%;
-  position: absolute;
-  /* changed */
-}
-
-#slots_count {
-  top: -7px;
-  left: 60px;
-}
-
-#tele_count {
-  top: -7px;
-  left: 100px;
-}
-
-#logo_and_name {
-  display: inline-block;
-}
-
-.name {
-  font-size: 25px;
+  margin-top: -5px;
+  font-size: 18px;
   font-weight: bold;
-}
-
-.card-title {
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.card-subtitle {
-  font-size: small;
-  color: aliceblue;
-}
-
-#card_button {
-  margin: 0 auto;
-  margin-top: 10px;
-  margin-bottom: -7px;
-  display: block;
-  width: 40%;
-  background-color: #4fd1c5;
-  border-color: transparent;
-}
-
-#card_button:hover {
-  background-color: #047481;
-}
-
-#figure {
-  margin-top: 10px;
-}
-
-#locum_card {
-  border: 1px solid #000000;
-}
-
-#locum_card:hover {
-  border-color: #009688;
+  border-radius: 10px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  width: 30%;
 }
 
 .carousel-inner {
@@ -141,72 +89,158 @@
   }
 }
 
-button.btn.btn-primary.btn-teal {
-  background-color: #319795;
-  color: #fff;
+/* ****CUSTOM BUTTONS**** */
+.customButtonsBase {
+  margin-bottom: -5px;
+  margin-top: -5px;
+  margin-left: -5px;
+  margin-right: -5px;
+  font-size: 18px;
+  border-radius: 10px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  width: 2rem;
+  color: white;
 }
 
-.btn-teal:hover {
-  background-color: #1a4c50;
+#customGreenButtons {
+  background-color: var(--primary-teal);
 }
 
-.text-blue {
-  color: #3182ce;
+#customGreenButtons:hover {
+  background-color: var(--hover-teal);
+  color: white;
 }
 
-.text-blue:hover {
-  color: #4a5568;
+#customGrayButtons {
+  background-color: var(--primary-gray);
 }
 
-/* Custom CSS for user profile card*/
-.avatar-img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
+#customGrayButtons:hover {
+  background-color: var(--deeper-gray);
+  color: white;
+}
+
+/* LOCUM & TELECONSULT COUNTS IN NAVBAR */
+.icon-badge-group .icon-badge-container {
+  display: inline-block;
+  margin-left: 30px;
+}
+
+.icon-badge-group .icon-badge-container:first-child {
+  margin-left: 0;
+}
+
+.icon-badge-container {
+  margin-top: 20px;
+  position: relative;
+}
+
+.icon-badge-icon {
+  font-size: 30px;
+  position: relative;
+}
+
+.icon-badge {
+  background-color: var(--primary-teal);
+  font-size: 12px;
+  color: white;
+  text-align: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 35%;
+  position: absolute;
+}
+
+#slots_count {
+  top: -7px;
+  left: 60px;
+}
+
+#tele_count {
+  top: -7px;
+  left: 100px;
+}
+
+.page-heading {
+  font-weight: bold;
+  font-size: 36px;
+  color: var(--primary-teal);
+}
+
+/* LOCUM/TELECONSULT CARDS */
+.card-header {
+  background-color: var(--primary-teal);
 }
 
 .card-title {
-  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 10px;
+  text-transform: uppercase;
 }
 
-.card-text {
-  font-size: 14px;
-  color: #888;
+.card-subtitle {
+  font-size: small;
+  color: var(--hyper-blue);
+}
+
+#figure {
   margin-top: 10px;
 }
 
-.custom-card-width {
-  width: 160%;
+#locum_card {
+  border: 1px solid #000000;
 }
 
-.label-bold {
-  font-weight: bold;
-  text-align: right;
+#locum_card:hover {
+  border-color: var(--hover-teal);
+}
+
+/* ****CUSTOM BUTTONS**** */
+
+/* Used at:
+- locums
+- teleconsults
+- sign up
+- log in */
+.btn.btn-primary.btn-primary {
+  background-color: var(--primary-teal);
+  color: #fff;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: -7px;
+  display: block;
+  width: 40%;
+  border-color: transparent;
+}
+
+.btn.btn-primary.btn-primary:hover {
+  background-color: var(--hover-teal);
+}
+
+/* *****Signup Hyperlink***** */
+.text-blue {
+  color: var(--hyper-blue);
+}
+
+.text-blue:hover {
+  color: var(--primary-gray);
 }
 
 /* Navbar avatar */
 .avatar-icon {
-  font-size: 30px; /* Adjust the size as desired */
+  font-size: 30px;
 }
 
+/* ****USER PROFILE****** */
+
+/* User Profile Avatar */
 .user-avatar {
-  font-size: 160px; /* Adjust the size as desired */
+  font-size: 160px;
 }
 
-/* .edit-icon {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #888;
-}
-
-.edit-icon:hover {
-  color: #4a5568;
-} */
-
+/* User Profile edit icon */
 .edit-icon {
   position: absolute;
   color: #888;
@@ -231,3 +265,32 @@ button.btn.btn-primary.btn-teal {
 .edit-icon:hover::after {
   opacity: 1;
 }
+
+.avatar-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 14px;
+  color: #888;
+  margin-top: 10px;
+}
+
+.card-width {
+  width: 160%;
+}
+
+.label-bold {
+  font-weight: bold;
+  text-align: right;
+}
+/* End of: ****USER PROFILE****** */

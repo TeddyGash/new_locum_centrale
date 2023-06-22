@@ -4,13 +4,13 @@
 
 {% block content %}
 <div style="text-align:center; margin: 20px;">
-    <h1 style="font-size: 36px; font-weight: bold; color: #4fd1c5;">Available Locums</h1>
+    <h1 class="page-heading">Available Locums</h1>
 </div>
 <div class="row row-cols-1 row-cols-md-4 g-4">
     {% for locum in locums %}
     <div class="col">
         <div class="card h-100" id="locum_card">
-            <div class="card-header bg-teal-500">
+            <div class="card-header">
                 <h5 class="card-title" style="color: white;">{{ locum.facility }}</h5>
                 <h6 class="card-subtitle mb-2 text-muted" style="color: white;">{{ locum.location}}</h6>
             </div>
@@ -36,7 +36,7 @@
                     <cite title="Source Title" class="text-end blockquote-footer">posted by {{ locum.posted_by }}</cite>
                 </div>
                 <div>
-                    <a href="#" class="btn btn-primary" id="card_button">Accept</a>
+                    <a href="#" class="btn btn-primary btn-teal" id="card_button">Accept</a>
                 </div>
             </div>
 

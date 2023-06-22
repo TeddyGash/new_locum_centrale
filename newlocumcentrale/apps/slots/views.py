@@ -38,6 +38,7 @@ class TeleconsultView(View):
 
 
 class LocumCreateView(View):
+    @method_decorator(login_required(login_url=LOGIN_URL))
     def get(self, request):
         form = LocumForm()
         locums = Locum.objects.filter(is_available=True)
@@ -52,7 +53,6 @@ class LocumCreateView(View):
             },
         )
 
-    @method_decorator(login_required(login_url=LOGIN_URL))
     def post(self, request):
         form = LocumForm(request.POST)
         locums = Locum.objects.filter(is_available=True)
@@ -74,6 +74,7 @@ class LocumCreateView(View):
 
 
 class TeleconsultCreateView(View):
+    @method_decorator(login_required(login_url=LOGIN_URL))
     def get(self, request):
         form = TeleconsultForm()
         locums = Locum.objects.filter(is_available=True)
@@ -88,7 +89,6 @@ class TeleconsultCreateView(View):
             },
         )
 
-    @method_decorator(login_required(login_url=LOGIN_URL))
     def post(self, request):
         form = TeleconsultForm(request.POST)
         locums = Locum.objects.filter(is_available=True)

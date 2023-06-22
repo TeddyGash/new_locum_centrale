@@ -22,13 +22,18 @@
                 <img src="{% static 'images/doc_handshake.jpeg' %}" alt="doc_handshake.jpeg" class="d-block w-100">
                 <div class="carousel-caption d-none d-md-block">
                     <div id="caption_box" class="container-fluid">
-                        <p id="caption_post">Need a locum
+                        <p id="caption_post" class="caption_base">Need a locum
                             doctor?</p>
                     </div>
                     <!-- Carousel button -->
-                    <div id="captionButton">
+                    <!-- <div id="captionButton">
                         <a href="{% url 'slots:post_locum' %}"
                             class="px-6 py-3 text-lg font-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700 mb-5">Post
+                            a Job</a>
+                    </div> -->
+                    <div>
+                        <a href="{% url 'slots:post_locum' %}"
+                            class="btn btn-primary btn-teal" id="captionButton">Post
                             a Job</a>
                     </div>
                 </div>
@@ -39,13 +44,13 @@
                 <img src="{% static 'images/doc_xx.jpeg' %}" alt="doc_xx.jpeg" class="d-block w-100">
                 <div class="carousel-caption d-none d-md-block">
                     <div id="caption_box" class="container-fluid">
-                        <p id="caption_accept">Available for a
+                        <p id="caption_accept" class="caption_base">Available for a
                             locum?</p>
                     </div>
                     <!-- Carousel button -->
-                    <div id="captionButton">
+                    <div>
                         <a href="{% url 'slots:locums' %}"
-                            class="px-6 py-3 text-lg font-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700 mb-5">Take
+                        class="btn btn-primary btn-teal" id="captionButton">Take
                             a locum</a>
                     </div>
                 </div>
@@ -57,13 +62,13 @@
                 <div class="carousel-caption d-none d-md-block">
 
                     <div id="caption_box" class="container-fluid">
-                        <p id="caption_tele">Need a Teleconsult appointment?
+                        <p id="caption_tele" class="caption_base">Need a Teleconsult appointment?
                         </p>
                     </div>
                     <!-- Carousel button -->
-                    <div id="captionButton">
+                    <div>
                         <a href="{% url 'slots:post_teleconsult' %}"
-                            class="px-6 py-3 text-lg font-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700 mb-5">Request
+                        class="btn btn-primary btn-teal" id="captionButton">Request
                             Teleconsult</a>
                     </div>
 
