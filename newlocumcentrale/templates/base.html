@@ -55,7 +55,7 @@
                         </a> -->
                         <div id="postJobDropdown" data-bs-toggle="dropdown">
                             <a href="#"
-                                class="navButtonsBase" id="post-job-button">Post Job</a>
+                                class="customButtonsBase" id="customGreenButtons">Post Job</a>
                         </div>
                         <ul class="dropdown-menu" aria-labelledby="postJobDropdown">
                             <li><a class="dropdown-item" href="{% url 'slots:post_locum' %}">Post Locum</a></li>
@@ -77,11 +77,11 @@
                 </div>
             {% else %}
                 <div class="icon-badge-container">
-                    <a href="{% url 'account_login' %}" class="customButtonsBase" id="">Log In</a>
+                    <a href="{% url 'account_login' %}" class="customButtonsBase" id="customGrayButtons">Log In</a>
                 </div>
                 <div class="icon-badge-container">
                     <a href="{% url 'account_signup' %}"
-                    class="customButtonsBase">Sign
+                    class="customButtonsBase" id="customGreenButtons">Sign
                         Up</a>
                 </div>
             {% endif %}

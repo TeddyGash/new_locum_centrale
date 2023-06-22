@@ -4,7 +4,23 @@
   --primary-teal: #66cc99;
   --hover-teal: #299676;
   --extra-light-teal: #9fffe1;
-  --primary-500: ##66cdaa;
+  --primary-gray: #767676;
+  --deeper-gray: #999999;
+  --hyper-blue: #3182ce;
+}
+
+/* WEBSITE NAME AND LOGO */
+.name {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.name:hover {
+  color: var(--primary-teal);
+}
+
+#logo_and_name {
+  display: inline-block;
 }
 
 #homepageCarousel {
@@ -73,25 +89,41 @@
   }
 }
 
-/* navbar buttons */
-/* class="px-6 py-3 text-lg font-semi-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700" */
+/* ****CUSTOM BUTTONS**** */
 .customButtonsBase {
-  margin-bottom: 1.5em;
+  margin-bottom: -5px;
   margin-top: -5px;
+  margin-left: -5px;
+  margin-right: -5px;
   font-size: 18px;
-  font-weight: bold;
   border-radius: 10px;
   padding-left: 6px;
   padding-right: 6px;
   padding-top: 9px;
   padding-bottom: 9px;
-  width: 1.5rem;
+  width: 2rem;
+  color: white;
 }
 
-#post-job-button {
+#customGreenButtons {
   background-color: var(--primary-teal);
 }
 
+#customGreenButtons:hover {
+  background-color: var(--hover-teal);
+  color: white;
+}
+
+#customGrayButtons {
+  background-color: var(--primary-gray);
+}
+
+#customGrayButtons:hover {
+  background-color: var(--deeper-gray);
+  color: white;
+}
+
+/* LOCUM & TELECONSULT COUNTS IN NAVBAR */
 .icon-badge-group .icon-badge-container {
   display: inline-block;
   margin-left: 30px;
@@ -112,7 +144,7 @@
 }
 
 .icon-badge {
-  background-color: turquoise;
+  background-color: var(--primary-teal);
   font-size: 12px;
   color: white;
   text-align: center;
@@ -120,7 +152,6 @@
   height: 20px;
   border-radius: 35%;
   position: absolute;
-  /* changed */
 }
 
 #slots_count {
@@ -133,13 +164,15 @@
   left: 100px;
 }
 
-#logo_and_name {
-  display: inline-block;
+.page-heading {
+  font-weight: bold;
+  font-size: 36px;
+  color: var(--primary-teal);
 }
 
-.name {
-  font-size: 25px;
-  font-weight: bold;
+/* LOCUM/TELECONSULT CARDS */
+.card-header {
+  background-color: var(--primary-teal);
 }
 
 .card-title {
@@ -149,23 +182,8 @@
 
 .card-subtitle {
   font-size: small;
-  color: aliceblue;
+  color: var(--hyper-blue);
 }
-
-/* locum & teleconsult card button */
-/* #card_button {
-  margin: 0 auto;
-  margin-top: 10px;
-  margin-bottom: -7px;
-  display: block;
-  width: 40%;
-  background-color: var(--primary-teal);
-  border-color: transparent;
-}
-
-#card_button:hover {
-  background-color: var(--hover-teal);
-} */
 
 #figure {
   margin-top: 10px;
@@ -176,7 +194,7 @@
 }
 
 #locum_card:hover {
-  border-color: #009688;
+  border-color: var(--hover-teal);
 }
 
 /* ****CUSTOM BUTTONS**** */
@@ -203,11 +221,11 @@
 
 /* *****Signup Hyperlink***** */
 .text-blue {
-  color: #3182ce;
+  color: var(--hyper-blue);
 }
 
 .text-blue:hover {
-  color: #4a5568;
+  color: var(--primary-gray);
 }
 
 /* Navbar avatar */
