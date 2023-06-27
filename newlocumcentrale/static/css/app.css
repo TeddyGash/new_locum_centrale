@@ -294,3 +294,9 @@
   text-align: right;
 }
 /* End of: ****USER PROFILE****** */
+
+/* sign up verified icon */
+.verified {
+  color: green;
+  font-weight: bold;
+}
