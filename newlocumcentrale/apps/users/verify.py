@@ -53,7 +53,8 @@ class VerifyMDCDetailsView(View):
 
         if {first_name.lower(), last_name.lower()} == {retrieved_first_name.lower(), retrieved_last_name.lower()}:
             response_data = {
-                "status": f"Verified as a {user_type}",
+                "status": "verified",
+                "verification_status": "True",
                 "specialty": specialty,
                 "register_type": register_type,
                 "year_of_provisional": year_of_provisional,
