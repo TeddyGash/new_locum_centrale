@@ -26,18 +26,11 @@ class VerifyMDCDetailsView(View):
         try:
             retrieved_data = self.make_request(url, payload, headers)
             status = retrieved_data["status"]
-            retrieved_status = status
 
             if status == "0":
-                user_type = self.try_alternate_user_type(user_type)
-                payload["type"] = user_type
-                retrieved_data = self.make_request(url, payload, headers)
-                status = retrieved_data["status"]
+                return JsonResponse({"status": "Wrong MDC number"})
 
-                if status == "0":
-                    return JsonResponse({"status": "Wrong MDC number", "retrieved_status": retrieved_status})
-
-            if status == "1":
+            elif status == "1":
                 verification_result = self.verify_user(retrieved_data, first_name, last_name, user_type)
                 return JsonResponse(verification_result)
 
@@ -49,12 +42,6 @@ class VerifyMDCDetailsView(View):
         response.raise_for_status()
         return response.json()
 
-    def try_alternate_user_type(self, user_type):
-        if user_type == "Doctor":
-            return "PA"
-        else:
-            return "Doctor"
-
     def verify_user(self, retrieved_data, first_name, last_name, user_type):
         retrieved_first_name = retrieved_data["user_data"]["first_name"]
         retrieved_last_name = retrieved_data["user_data"]["last_name"]
@@ -64,7 +51,6 @@ class VerifyMDCDetailsView(View):
         phone = retrieved_data["user_data"]["phone"]
         category = retrieved_data["user_data"]["category"]
 
-        # if first_name.lower() == retrieved_first_name.lower() and last_name.lower() == retrieved_last_name.lower():
         if {first_name.lower(), last_name.lower()} == {retrieved_first_name.lower(), retrieved_last_name.lower()}:
             response_data = {
                 "status": f"Verified as a {user_type}",
