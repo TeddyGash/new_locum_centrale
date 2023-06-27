@@ -1,15 +1,17 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponse
+
+# from django.http import HttpResponse
 from django.urls import reverse  # reverse_lazy
 from django.utils.translation import gettext_lazy as _
-from django.views import View
+
+# from django.views import View
 from django.views.generic import DetailView, RedirectView, UpdateView
 
 from newlocumcentrale.apps.slots.models import Locum, Teleconsults
 
-from .verification_script import verify_mdc_details
+# from .verification_script import verify_mdc_details
 
 User = get_user_model()
 
@@ -108,12 +110,12 @@ user_redirect_view = UserRedirectView.as_view()
 #         return reverse_lazy("users:detail", kwargs={"username": self.request.user.username})
 
 
-class VerifyMDCDetailsView(View):
-    def post(self, request):
-        full_name = f"{request.POST.get('first_name')} {request.POST.get('last_name')}"
-        category = request.POST.get("category")  # Assuming category is passed in the form data
-        mdc_number = request.POST.get("mdc_number")  # Assuming mdc_number is passed in the form data
+# class VerifyMDCDetailsView(View):
+#     def post(self, request):
+#         full_name = f"{request.POST.get('first_name')} {request.POST.get('last_name')}"
+#         category = request.POST.get("category")  # Assuming category is passed in the form data
+#         mdc_number = request.POST.get("mdc_number")  # Assuming mdc_number is passed in the form data
 
-        result = verify_mdc_details(category, mdc_number, full_name)
+# result = verify_mdc_details(category, mdc_number, full_name)
 
-        return HttpResponse(result)
+# return HttpResponse(result)

@@ -48,8 +48,8 @@ class UserSignupForm(SignupForm):
     email = forms.EmailField(label=_("Email"))
     register_as = forms.ChoiceField(
         choices=[
-            ("doctor", _("Doctor")),
-            ("pa", _("Physician Assistant")),
+            ("Doctor", _("Doctor")),
+            ("PA", _("Physician Assistant")),
             ("patient", _("Patient")),
             ("employer", _("Employer")),
         ],

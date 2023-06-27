@@ -23,7 +23,7 @@ function verifyFormFields() {
   var lastName = $('#id_last_name').val();
   var category = $('#id_register_as').val();
   var mdcNumber = $('#mdc-registration-no-field').val();
-  var fullName = firstName + ' ' + lastName;
+  // var fullName = firstName + ' ' + lastName;
 
   if ((category === 'doctor' || category === 'pa') && fullName && mdcNumber) {
     verificationStatus.style.display = 'block';
@@ -34,20 +34,34 @@ function verifyFormFields() {
       url: "{% url 'users:verify_mdc_details' %}",
       type: 'POST',
       data: {
-        full_name: fullName,
-        category: category,
+        first_name: firstName,
+        last_name: lastName,
+        user_type: category,
         mdc_number: mdcNumber,
         csrfmiddlewaretoken: '{{ csrf_token }}',
       },
       success: function (response) {
-        verificationText.innerText = response.message;
-        if (response.verified) {
+        verificationText.innerText = response.status;
+        if (response.status.startsWith('Verified')) {
           signupButton.disabled = false;
         } else {
           signupButton.disabled = true;
         }
       },
-      error: function (xhr, status, error) {
+      // success: function (response) {
+      //   verificationText.innerText = response.message;
+      //   if (response.verified) {
+      //     signupButton.disabled = false;
+      //   } else {
+      //     signupButton.disabled = true;
+      //   }
+      // },
+      // error: function (xhr, status, error) {
+      //   verificationText.innerText = 'An error occurred during verification.';
+      //   console.error(error);
+      //   signupButton.disabled = true;
+      // },
+      error: function (error) {
         verificationText.innerText = 'An error occurred during verification.';
         console.error(error);
         signupButton.disabled = true;
