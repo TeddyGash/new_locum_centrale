@@ -63,14 +63,14 @@
               <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
 
+            <div id="verification_status" class="text-center mt-4" style="display: none;">
+              <p id="verification_text"></p>
+            </div>
+
             <div class="text-center mt-4">
               <button class="btn btn-primary btn-teal" id="signup_button" type="submit" disabled>{% translate "Sign Up" %} &raquo;</button>
             </div>
           </form>
-
-          <div id="verification_status" class="text-center mt-4" style="display: none;">
-            <p id="verification_text"></p>
-          </div>
         </div>
       </div>
     </div>
@@ -101,6 +101,7 @@
     var verificationStatus = document.getElementById("verification_status");
     var verificationText = document.getElementById("verification_text");
 
+    // Fetch user inputs
     function verifyFormFields() {
       var formData = $(signupForm).serialize();
 
@@ -118,23 +119,15 @@
       var mdcNumber = params["mdc_registration_no"];
       var fullName = firstName + ' ' + lastName;
 
-      // console.log('formData:', formData);
-      console.log('firstName:', firstName);
-      console.log('lastName:', lastName);
-      console.log('category:', category);
-      console.log('mdcNumber:', mdcNumber);
-      console.log('fullName:', fullName);
-
-      if ((category === 'Doctor' || category === 'PA') && fullName && mdcNumber) {
-        console.log('Verification conditions met');
+      if ((category === 'Doctor' || category === 'PA') && fullName && mdcNumber && mdcNumber.length === 12) {
         verificationStatus.style.display = 'block';
-        verificationText.innerHTML = 'Verifying...';
+        // verificationText.innerHTML = 'Verifying...';
+        verificationText.innerHTML = '<span style="color: black; font-weight: normal;"> Verifying... </span>';
         signupButton.disabled = true;
 
         $.ajax({
           url: "{% url 'users:verify_mdc_details' %}",
           type: 'POST',
-          // data: formData,
           data: {
             first_name: firstName,
             last_name: lastName,
@@ -142,42 +135,43 @@
             mdc_number: mdcNumber,
             csrfmiddlewaretoken: '{{ csrf_token }}',
           },
-          // success: function(response) {
-          //   if (response.status === 'verified') {
-          //     verificationText.innerHTML = '<span class="verified">Verified <i class="fas fa-check-circle"></i></span>';
-          //     signupButton.disabled = false;
-          //   } else {
-          //     verificationText.innerHTML = 'Verification Failed';
-          //     signupButton.disabled = true;
-          //   }
-          // },
           success: function(response) {
-            console.log(response);
-            if (response.status === 'Verified as a doctor' || response.status === 'Verified as a PA') {
-              verificationText.innerHTML = '<span class="verified">Verified <i class="fas fa-check-circle"></i></span>';
+            if (response.status === 'Verified as a Doctor' || response.status === 'Verified as a PA') {
+              verificationText.innerHTML = '<span class="verified"> Verified <i class="fas fa-check-circle"></i></span>';
+              verificationText.classList.remove("error");
               signupButton.disabled = false;
             } else {
               verificationText.innerHTML = 'Verification Failed';
+              verificationText.classList.add("error");
               signupButton.disabled = true;
             }
-            verificationText.innerHTML = response.status;  // Add this line to display the status value
+            // verificationText.innerHTML = response.status;  // Add this line to display the status value
           },
 
           error: function(xhr, status, error) {
             verificationText.innerHTML = 'An error occurred during verification.';
-            console.error(error);
             signupButton.disabled = true;
           }
         });
+      } else if ((category === 'Doctor' || category === 'PA') && fullName && mdcNumber && mdcNumber.length !== 12) {
+        verificationStatus.style.display = 'block';
+        verificationText.innerHTML = 'Wrong MDC Number';
+        verificationText.classList.add("error");
+        signupButton.disabled = true;
       } else {
-        console.log('Verification conditions not met');
         verificationStatus.style.display = 'none';
         verificationText.innerHTML = '';
-        signupButton.disabled = true;
+        signupButton.disabled = false;
       }
     }
 
   $('#id_first_name, #id_last_name, #id_register_as, #mdc-registration-no-field').on('input', verifyFormFields);
+
+  // Add click event listener to the submit button
+  // signupButton.addEventListener('click', function(event) {
+  //     event.preventDefault(); // Prevent form submission
+  //     verifyFormFields(); // Verify form fields when the submit button is clicked
+  //   });
 
   // Trigger initial verification on page load
   verifyFormFields();
