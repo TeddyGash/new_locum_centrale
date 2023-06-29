@@ -2,6 +2,10 @@ import requests
 from django.http import JsonResponse
 from django.views import View
 
+from newlocumcentrale.apps.users.forms import UserSignupForm
+
+# from django.http import request
+
 
 class VerifyMDCDetailsView(View):
     def post(self, request):
@@ -31,7 +35,7 @@ class VerifyMDCDetailsView(View):
                 return JsonResponse({"status": "Wrong MDC number"})
 
             elif status == "1":
-                verification_result = self.verify_user(retrieved_data, first_name, last_name, user_type)
+                verification_result = self.verify_user(request, retrieved_data, first_name, last_name, user_type)
                 return JsonResponse(verification_result)
 
         except requests.RequestException as e:
@@ -42,7 +46,7 @@ class VerifyMDCDetailsView(View):
         response.raise_for_status()
         return response.json()
 
-    def verify_user(self, retrieved_data, first_name, last_name, user_type):
+    def verify_user(self, request, retrieved_data, first_name, last_name, user_type):
         retrieved_first_name = retrieved_data["user_data"]["first_name"]
         retrieved_last_name = retrieved_data["user_data"]["last_name"]
         specialty = retrieved_data["user_data"]["specialty"]
@@ -61,6 +65,19 @@ class VerifyMDCDetailsView(View):
                 "phone": phone,
                 "category": category,
             }
+            form = UserSignupForm(request.POST)
+            # user = form.save(commit=False)
+
+            # user.verification_status = response_data['verification_status']
+            # user.contact = phone
+            # user.register_type = register_type
+            # user.date_of_provisional_reg = year_of_provisional
+            # user.category = category
+
+            # user.save()
+
+            # form.receive_data(response_data)
+            form.save(response_data)
             return response_data
         else:
             return {"status": "Names don't match"}

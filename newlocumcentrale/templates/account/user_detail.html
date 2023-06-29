@@ -24,6 +24,11 @@
           <p class="card-text"><span class="label-bold">Email:</span> {{ user.email }}</p>
           <p class="card-text"><span class="label-bold">User Type:</span> {{ user.register_as.capitalize }}</p>
           <p class="card-text"><span class="label-bold">Date Joined:</span> {{ user.date_joined }}</p>
+          <p>{{ user.verification_status }}</p>
+          <p>{{ user.contact }}</p>
+          <p>{{ user.register_type }}</p>
+          <p>{{ user.date_of_provisional_reg }}</p>
+          <p>{{ user.category }}</p>
         </div>
       </div>
     </div>

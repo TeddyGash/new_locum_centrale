@@ -69,12 +69,16 @@ class UserSignupForm(SignupForm):
     password2 = forms.CharField(widget=forms.PasswordInput, label=_("Repeat Password"))
     # mdc_registration_no = forms.CharField(max_length=30, label=_('MDC Registration No.'), required=False)
 
+    class Meta:
+        model = User
+        exclude = ["verification_status", "contact", "register_type", "date_of_provisional_reg", "category"]
+
     def clean(self):
         cleaned_data = super().clean()
         register_as = cleaned_data.get("register_as")
         mdc_registration_no = cleaned_data.get("mdc_registration_no")
 
-        if register_as in ["doctor", "pa"] and not mdc_registration_no:
+        if register_as in ["Doctor", "PA"] and not mdc_registration_no:
             self.add_error(
                 "mdc_registration_no", _("MDC Registration No. is required for Doctors and Physician Assistants.")
             )
@@ -86,14 +90,41 @@ class UserSignupForm(SignupForm):
         self.fields["password1"].widget.attrs.update({"autocomplete": "new-password"})
         self.fields["password2"].widget.attrs.update({"autocomplete": "new-password"})
 
-    def save(self, request):
-        user = super().save(request)
+    # def receive_data(self, response_data):
+    #     # verification_status = response_data['verification_status']
+    #     # contact = response_data['phone']
+    #     # register_type = response_data['register_type']
+    #     # date_of_provisional_reg = response_data['year_of_provisional']
+    #     # category = response_data['category']
+
+    #     # return verification_status, contact, register_type, date_of_provisional_reg, category
+    #     return response_data
+
+    def save(self, request, response_data):
+        # response_data = self.receive_data()  # Call receive_data to get the values
+        # verification_status = response_data['verification_status']
+        # contact = response_data['phone']
+        # register_type = response_data['register_type']
+        # date_of_provisional_reg = response_data['year_of_provisional']
+        # category = response_data['category']
+        user = super().save(request, response_data)
+        verification_status, contact, register_type, date_of_provisional_reg, category = response_data
         user.first_name = self.cleaned_data["first_name"]
         user.last_name = self.cleaned_data["last_name"]
         user.username = self.cleaned_data["username"]
         user.email = self.cleaned_data["email"]
         user.register_as = self.cleaned_data["register_as"]
         user.mdc_registration_no = self.cleaned_data["mdc_registration_no"]
+        user.verification_status = verification_status
+        user.contact = contact
+        user.register_type = register_type
+        user.date_of_provisional_reg = date_of_provisional_reg
+        user.category = category
+        # user.verification_status = response_data['verification_status']
+        # user.contact = response_data['phone']
+        # user.register_type = response_data['register_type']
+        # user.date_of_provisional_reg = response_data['year_of_provisional']
+        # user.category = response_data['category']
         user.save()
         return user
 

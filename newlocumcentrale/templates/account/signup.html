@@ -136,7 +136,7 @@
             csrfmiddlewaretoken: '{{ csrf_token }}',
           },
           success: function(response) {
-            if (response.status === 'Verified as a Doctor' || response.status === 'Verified as a PA') {
+            if (response.status === 'verified') {
               verificationText.innerHTML = '<span class="verified"> Verified <i class="fas fa-check-circle"></i></span>';
               verificationText.classList.remove("error");
               signupButton.disabled = false;
