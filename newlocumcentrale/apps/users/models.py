@@ -46,6 +46,12 @@ class User(AbstractUser):
         blank=True,
         null=True,
     )
+    # retrieved data
+    verification_status = models.BooleanField(default=False, verbose_name=_("Verification Status"))
+    contact = models.CharField(max_length=30, verbose_name=_("Contact"), null=True)
+    register_type = models.CharField(max_length=30, verbose_name=_("Register Type"), null=True)
+    category = models.CharField(max_length=30, verbose_name=_("Category"), null=True)
+    date_of_provisional_reg = models.DateField(null=True)
 
     def __str__(self):
         return self.username

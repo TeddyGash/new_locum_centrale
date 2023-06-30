@@ -136,7 +136,7 @@
             csrfmiddlewaretoken: '{{ csrf_token }}',
           },
           success: function(response) {
-            if (response.status === 'Verified as a Doctor' || response.status === 'Verified as a PA') {
+            if (response.status === 'verified') {
               verificationText.innerHTML = '<span class="verified"> Verified <i class="fas fa-check-circle"></i></span>';
               verificationText.classList.remove("error");
               signupButton.disabled = false;
@@ -166,12 +166,6 @@
     }
 
   $('#id_first_name, #id_last_name, #id_register_as, #mdc-registration-no-field').on('input', verifyFormFields);
-
-  // Add click event listener to the submit button
-  // signupButton.addEventListener('click', function(event) {
-  //     event.preventDefault(); // Prevent form submission
-  //     verifyFormFields(); // Verify form fields when the submit button is clicked
-  //   });
 
   // Trigger initial verification on page load
   verifyFormFields();

@@ -150,7 +150,6 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
-CUSTOM_LIGHT_GREEN = "#4fd1c5"
 
 # MEDIA
 # ------------------------------------------------------------------------------
