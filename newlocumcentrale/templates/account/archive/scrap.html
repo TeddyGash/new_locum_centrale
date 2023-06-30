@@ -1502,3 +1502,583 @@ $(document).ready(function() {
 </form>
 </div>
 {% endblock %} -->
+
+<div>
+  <a href="#" class="btn btn-primary btn-teal" id="card_button">Accept</a>
+</div>
+
+<div id="captionButton">
+  <a href="{% url 'slots:post_locum' %}"
+      class="px-6 py-3 text-lg font-bold bg-teal-500 text-white rounded-xl hover:bg-teal-700 mb-5">Post
+      a Job</a>
+</div>
+
+$(document).ready(function() {
+  var signupButton = document.getElementById("signup_button");
+  var verificationStatus = document.getElementById("verification_status");
+  var verificationText = document.getElementById("verification_text");
+
+  function verifyFormFields() {
+    var firstName = $('#id_first_name').val();
+    var lastName = $('#id_last_name').val();
+    var category = $('#id_register_as').val();
+    var mdcNumber = $('#mdc-registration-no-field').val();
+    var fullName = firstName + ' ' + lastName;
+
+    console.log('firstName:', firstName);
+    console.log('lastName:', lastName);
+    console.log('category:', category);
+    console.log('mdcNumber:', mdcNumber);
+    console.log('fullName:', fullName);
+
+    if ((category === 'doctor' || category === 'pa') && fullName && mdcNumber) {
+      console.log('Verification conditions met');
+      verificationStatus.style.display = 'block';
+      verificationText.innerHTML = 'Verifying...';
+      signupButton.disabled = true;
+
+      $.ajax({
+        url: "{% url 'users:verify_mdc_details' %}",
+        type: 'POST',
+        data: {
+          first_name: firstName,
+          last_name: lastName,
+          user_type: category,
+          mdc_number: mdcNumber,
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+        },
+        success: function(response) {
+          console.log('Verification success');
+          if (response.status === 'verified') {
+            verificationText.innerHTML = '<span class="verified">Verified <i class="fas fa-check-circle"></i></span>';
+            signupButton.disabled = false;
+          } else {
+            verificationText.innerHTML = 'Verification Failed';
+            signupButton.disabled = true;
+          }
+        },
+        error: function(xhr, status, error) {
+          console.log('Verification error');
+          verificationText.innerHTML = 'An error occurred during verification.';
+          console.error(error);
+          signupButton.disabled = true;
+        }
+      });
+    } else {
+      console.log('Verification conditions not met');
+      verificationStatus.style.display = 'none';
+      verificationText.innerHTML = '';
+      signupButton.disabled = true;
+    }
+  }
+
+  $('#id_first_name, #id_last_name, #id_register_as, #mdc-registration-no-field').on('input', verifyFormFields);
+  $('#id_first_name, #id_last_name, #id_register_as, #mdc-registration-no-field').change(verifyFormFields); // Add change event listener
+
+  // Trigger initial verification on page load
+  verifyFormFields();
+});
+
+
+$(document).ready(function() {
+  var signupButton = document.getElementById("signup_button");
+  var verificationStatus = document.getElementById("verification_status");
+  var verificationText = document.getElementById("verification_text");
+
+  function verifyFormFields() {
+    var firstName = document.getElementById('id_first_name').value;
+    var lastName = document.getElementById('id_last_name').value;
+    var category = document.getElementById('id_register_as').value;
+    var mdcNumber = document.getElementById('mdc-registration-no-field').value;
+    var fullName = firstName + ' ' + lastName;
+
+    console.log('firstName:', firstName);
+    console.log('lastName:', lastName);
+    console.log('category:', category);
+    console.log('mdcNumber:', mdcNumber);
+    console.log('fullName:', fullName);
+
+    if ((category === 'doctor' || category === 'pa') && firstName && lastName && mdcNumber) {
+      console.log('Verification conditions met');
+      verificationStatus.style.display = 'block';
+      verificationText.innerHTML = 'Verifying...';
+      signupButton.disabled = true;
+
+      $.ajax({
+        url: "{% url 'users:verify_mdc_details' %}",
+        type: 'POST',
+        data: {
+          first_name: firstName,
+          last_name: lastName,
+          user_type: category,
+          mdc_number: mdcNumber,
+          csrfmiddlewaretoken: '{{ csrf_token }}',
+        },
+        success: function(response) {
+          if (response.status === 'verified') {
+            verificationText.innerHTML = '<span class="verified">Verified <i class="fas fa-check-circle"></i></span>';
+            signupButton.disabled = false;
+          } else {
+            verificationText.innerHTML = 'Verification Failed';
+            signupButton.disabled = true;
+          }
+        },
+        error: function(xhr, status, error) {
+          verificationText.innerHTML = 'An error occurred during verification.';
+          console.error(error);
+          signupButton.disabled = true;
+        }
+      });
+    } else {
+      console.log('Verification conditions not met');
+      verificationStatus.style.display = 'none';
+      verificationText.innerHTML = '';
+      signupButton.disabled = true;
+    }
+  }
+
+  $('#id_first_name, #id_last_name, #id_register_as, #mdc-registration-no-field').on('input', verifyFormFields);
+
+  // Trigger initial verification on page load
+  verifyFormFields();
+});
+
+<!-- HHHHHHHHHHHHHHHHHHHHHHHHH -->
+{% extends "account/base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+  <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyQ7wYH3F86HLIXwYRLO1cXXCMgCD2PDMYtB6GgLj+aJUEFPCv5cBke0P0JWd2ti" crossorigin="anonymous"></script> -->
+  <!-- <script src="{% static 'js/signup.js' %}"></script> -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}{% translate "Signup" %}{% endblock %}
+
+{% block inner %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h1 class="text-center mt-4">{% translate "Sign Up" %}</h1>
+
+      <div class="text-center mt-3">
+        <p>{% blocktranslate %}Already have an account? Then please <a href="{{ login_url }}" class="text-blue">sign in</a>.{% endblocktranslate %}</p>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-body">
+          <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form-group" id="id_first_name">
+              {{ form.first_name|as_crispy_field }}
+            </div>
+
+            <div class="form-group" id="id_last_name">
+              {{ form.last_name|as_crispy_field }}
+            </div>
+
+            <div class="form-group">
+              {{ form.username|as_crispy_field }}
+            </div>
+
+            <div class="form-group">
+              {{ form.email|as_crispy_field }}
+            </div>
+
+            <div class="form-group" id="id_register_as">
+              {{ form.register_as|as_crispy_field }}
+            </div>
+
+            <div class="form-group" id="mdc-registration-no-field" {% if form.register_as.value != "doctor" and form.register_as.value != "pa" %}style="display: none;"{% endif %}>
+              {{ form.mdc_registration_no|as_crispy_field }}
+            </div>
+
+            <div class="form-group">
+              {{ form.password1|as_crispy_field }}
+            </div>
+
+            <div class="form-group">
+              {{ form.password2|as_crispy_field }}
+            </div>
+
+            {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+
+            <div class="text-center mt-4">
+              <button class="btn btn-primary btn-teal" id="signup_button" type="submit" disabled>{% translate "Sign Up" %} &raquo;</button>
+            </div>
+          </form>
+
+          <div id="verification_status" class="text-center mt-4" style="display: none;">
+            <p id="verification_text"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var registerAsField = document.getElementById("{{ form.register_as.id_for_label }}");
+  var mdcRegistrationField = document.getElementById("mdc-registration-no-field");
+  var signupForm = document.getElementById("signup_form");
+  var signupButton = document.getElementById("signup_button");
+  var verificationStatus = document.getElementById("verification_status");
+  var verificationText = document.getElementById("verification_text");
+
+  function toggleMdcRegistrationField() {
+    if (registerAsField.value === "doctor" || registerAsField.value === "pa") {
+      mdcRegistrationField.style.display = "block";
+    } else {
+      mdcRegistrationField.style.display = "none";
+    }
+  }
+
+  registerAsField.addEventListener("change", toggleMdcRegistrationField);
+  toggleMdcRegistrationField();
+
+// $(document).ready(function() {
+//   console.log("jQuery version:", $.fn.jquery);
+// });
+
+document.addEventListener('DOMContentLoaded', function() {
+  var signupButton = document.getElementById('signup_button');
+  var verificationStatus = document.getElementById('verification_status');
+  var verificationText = document.getElementById('verification_text');
+
+  function verifyFormFields() {
+    var firstName = document.getElementById('id_first_name').value;
+    var lastName = document.getElementById('id_last_name').value;
+    var category = document.getElementById('id_register_as').value;
+    var mdcNumber = document.getElementById('mdc-registration-no-field').value;
+    var fullName = firstName + ' ' + lastName;
+
+    console.log('firstName:', firstName);
+    console.log('lastName:', lastName);
+    console.log('category:', category);
+    console.log('mdcNumber:', mdcNumber);
+    console.log('fullName:', fullName);
+
+    if ((category === 'doctor' || category === 'pa') && firstName && lastName && mdcNumber) {
+      console.log('Verification conditions met');
+      verificationStatus.style.display = 'block';
+      verificationText.innerHTML = 'Verifying...';
+      signupButton.disabled = true;
+
+      // AJAX request using native JavaScript methods
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', "{% url 'users:verify_mdc_details' %}");
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          if (response.status === 'verified') {
+            verificationText.innerHTML = '<span class="verified">Verified <i class="fas fa-check-circle"></i></span>';
+            signupButton.disabled = false;
+          } else {
+            verificationText.innerHTML = 'Verification Failed';
+            signupButton.disabled = true;
+          }
+        } else {
+          verificationText.innerHTML = 'An error occurred during verification.';
+          console.error(xhr.statusText);
+          signupButton.disabled = true;
+        }
+      };
+      xhr.onerror = function() {
+        verificationText.innerHTML = 'An error occurred during verification.';
+        console.error(xhr.statusText);
+        signupButton.disabled = true;
+      };
+      xhr.send(
+        'first_name=' + encodeURIComponent(firstName) +
+        '&last_name=' + encodeURIComponent(lastName) +
+        '&user_type=' + encodeURIComponent(category) +
+        '&mdc_number=' + encodeURIComponent(mdcNumber) +
+        '&csrfmiddlewaretoken=' + encodeURIComponent('{{ csrf_token }}')
+      );
+    } else {
+      console.log('Verification conditions not met');
+      verificationStatus.style.display = 'none';
+      verificationText.innerHTML = '';
+      signupButton.disabled = true;
+    }
+  }
+
+  document.querySelectorAll('#id_first_name, #id_last_name, #id_register_as, #mdc-registration-no-field').forEach(function(element) {
+    element.addEventListener('input', verifyFormFields);
+  });
+
+  // Trigger initial verification on page load
+  verifyFormFields();
+});
+
+
+
+
+</script>
+{% endblock %}
+
+
+
+$(document).ready(function() {
+  var signupButton = document.getElementById("signup_button");
+  var verificationStatus = document.getElementById("verification_status");
+  var verificationText = document.getElementById("verification_text");
+
+  function verifyFormFields() {
+    // var firstName = $('#id_first_name').val();
+    // var lastName = $('#id_last_name').val();
+    // var category = $('#id_register_as').val();
+    // var mdcNumber = $('#mdc-registration-no-field').val();
+
+    var formData = $(signupForm).serialize();
+
+    // var fullName = firstName + ' ' + lastName;
+
+    console.log('firstName:', firstName);
+    console.log('lastName:', lastName);
+    console.log('category:', category);
+    console.log('mdcNumber:', mdcNumber);
+    console.log('fullName:', fullName);
+
+    if ((category === 'doctor' || category === 'pa') && fullName && mdcNumber) {
+      console.log('Verification conditions met');
+      verificationStatus.style.display = 'block';
+      verificationText.innerHTML = 'Verifying...';
+      signupButton.disabled = true;
+
+      $.ajax({
+        url: "{% url 'users:verify_mdc_details' %}",
+        type: 'POST',
+        // data: {
+        //   first_name: firstName,
+        //   last_name: lastName,
+        //   user_type: category,
+        //   mdc_number: mdcNumber,
+        //   csrfmiddlewaretoken: '{{ csrf_token }}',
+        // },
+
+        data: formData + '&first_name=' + encodeURIComponent(firstName) + '&last_name=' + encodeURIComponent(lastName) + '&user_type=' + encodeURIComponent(category) + '&mdc_number=' + encodeURIComponent(mdcNumber) + '&csrfmiddlewaretoken={{ csrf_token }}',
+
+        console.log('first_name:', firstName);
+        console.log('last_name:', lastName);
+        console.log('user_type:', category);
+        console.log('mdc_number:', mdcNumber);
+
+
+        success: function(response) {
+          if (response.status === 'verified') {
+            verificationText.innerHTML = '<span class="verified">Verified <i class="fas fa-check-circle"></i></span>';
+            signupButton.disabled = false;
+          } else {
+            verificationText.innerHTML = 'Verification Failed';
+            signupButton.disabled = true;
+          }
+        },
+        error: function(xhr, status, error) {
+          verificationText.innerHTML = 'An error occurred during verification.';
+          console.error(error);
+          signupButton.disabled = true;
+        }
+      });
+    } else {
+      console.log('Verification conditions not met');
+      verificationStatus.style.display = 'none';
+      verificationText.innerHTML = '';
+      signupButton.disabled = true;
+    }
+  }
+
+$('#id_first_name, #id_last_name, #id_register_as, #mdc-registration-no-field').on('input', verifyFormFields);
+
+// Trigger initial verification on page load
+verifyFormFields();
+});
+
+
+
+
+{% extends "account/base.html" %}
+
+{% load static %}
+
+{% block extra_head %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+{% endblock %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}{% translate "Signup" %}{% endblock %}
+
+{% block inner %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h1 class="text-center mt-4">{% translate "Sign Up" %}</h1>
+
+      <div class="text-center mt-3">
+        <p>{% blocktranslate %}Already have an account? Then please <a href="{{ login_url }}" class="text-blue">sign in</a>.{% endblocktranslate %}</p>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-body">
+          <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form-group" id="id_first_name">
+              {{ form.first_name|as_crispy_field }}
+            </div>
+
+            <div class="form-group" id="id_last_name">
+              {{ form.last_name|as_crispy_field }}
+            </div>
+
+            <div class="form-group">
+              {{ form.username|as_crispy_field }}
+            </div>
+
+            <div class="form-group">
+              {{ form.email|as_crispy_field }}
+            </div>
+
+            <div class="form-group" id="id_register_as">
+              {{ form.register_as|as_crispy_field }}
+            </div>
+
+            <div class="form-group" id="mdc-registration-no-field" {% if form.register_as.value != "doctor" and form.register_as.value != "pa" %}style="display: none;"{% endif %}>
+              {{ form.mdc_registration_no|as_crispy_field }}
+            </div>
+
+            <div class="form-group">
+              {{ form.password1|as_crispy_field }}
+            </div>
+
+            <div class="form-group">
+              {{ form.password2|as_crispy_field }}
+            </div>
+
+            {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+
+            <div id="verification_status" class="text-center mt-4" style="display: none;">
+              <p id="verification_text"></p>
+            </div>
+
+            <div class="text-center mt-4">
+              <button class="btn btn-primary btn-teal" id="signup_button" type="submit" disabled>{% translate "Sign Up" %} &raquo;</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var registerAsField = document.getElementById("{{ form.register_as.id_for_label }}");
+  var mdcRegistrationField = document.getElementById("mdc-registration-no-field");
+  var signupForm = document.getElementById("signup_form");
+  var signupButton = document.getElementById("signup_button");
+  var verificationStatus = document.getElementById("verification_status");
+  var verificationText = document.getElementById("verification_text");
+
+  function toggleMdcRegistrationField() {
+    if (registerAsField.value === "Doctor" || registerAsField.value === "PA") {
+      mdcRegistrationField.style.display = "block";
+    } else {
+      mdcRegistrationField.style.display = "none";
+    }
+  }
+
+  registerAsField.addEventListener("change", toggleMdcRegistrationField);
+  toggleMdcRegistrationField();
+
+  $(document).ready(function() {
+    var signupButton = document.getElementById("signup_button");
+    var verificationStatus = document.getElementById("verification_status");
+    var verificationText = document.getElementById("verification_text");
+
+    // Fetch user inputs
+    function verifyFormFields() {
+      var formData = $(signupForm).serialize();
+
+      // Extract the values from the formData string
+      var formParams = $.param($(signupForm).serializeArray());
+      var params = {};
+      $.each(formParams.split("&"), function(n, param) {
+        var parts = param.split("=");
+        params[parts[0]] = decodeURIComponent(parts[1]);
+      });
+
+      var firstName = params["first_name"];
+      var lastName = params["last_name"];
+      var category = params["register_as"];
+      var mdcNumber = params["mdc_registration_no"];
+      var fullName = firstName + ' ' + lastName;
+
+      if ((category === 'Doctor' || category === 'PA') && fullName && mdcNumber) {
+        verificationStatus.style.display = 'block';
+        verificationText.innerHTML = 'Verifying...';
+        signupButton.disabled = true;
+
+        $.ajax({
+          url: "{% url 'users:verify_mdc_details' %}",
+          type: 'POST',
+          data: {
+            first_name: firstName,
+            last_name: lastName,
+            user_type: category,
+            mdc_number: mdcNumber,
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+          },
+          success: function(response) {
+            if (response.status === 'Verified as a Doctor' || response.status === 'Verified as a PA') {
+              verificationText.innerHTML = '<span class="verified"> Verified <i class="fas fa-check-circle"></i></span>';
+              signupButton.disabled = false;
+            } else {
+              verificationText.innerHTML = 'Verification Failed';
+              signupButton.disabled = true;
+            }
+            // verificationText.innerHTML = response.status;  // Add this line to display the status value
+          },
+
+          error: function(xhr, status, error) {
+            verificationText.innerHTML = 'An error occurred during verification.';
+            signupButton.disabled = true;
+          }
+        });
+      } else {
+        verificationStatus.style.display = 'none';
+        verificationText.innerHTML = '';
+        signupButton.disabled = false;
+      }
+    }
+
+  $('#id_first_name, #id_last_name, #id_register_as, #mdc-registration-no-field').on('input', verifyFormFields);
+
+  // Add click event listener to the submit button
+  // signupButton.addEventListener('click', function(event) {
+  //     event.preventDefault(); // Prevent form submission
+  //     verifyFormFields(); // Verify form fields when the submit button is clicked
+  //   });
+
+  // Trigger initial verification on page load
+  verifyFormFields();
+});
+
+
+
+
+</script>
+{% endblock %}
