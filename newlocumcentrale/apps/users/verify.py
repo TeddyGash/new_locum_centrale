@@ -1,5 +1,4 @@
 import requests
-from django.core.cache import cache
 from django.http import JsonResponse
 from django.views import View
 
@@ -34,7 +33,7 @@ class VerifyMDCDetailsView(View):
                 return JsonResponse({"status": "Wrong MDC number"})
 
             elif status == "1":
-                verification_result = self.verify_user(mdc_number, retrieved_data, first_name, last_name)
+                verification_result = self.verify_user(request, retrieved_data, first_name, last_name)
                 return JsonResponse(verification_result)
 
         except requests.RequestException as e:
@@ -45,7 +44,7 @@ class VerifyMDCDetailsView(View):
         response.raise_for_status()
         return response.json()
 
-    def verify_user(self, mdc_number, retrieved_data, first_name, last_name):
+    def verify_user(self, request, retrieved_data, first_name, last_name):
         retrieved_first_name = retrieved_data["user_data"]["first_name"]
         retrieved_last_name = retrieved_data["user_data"]["last_name"]
         specialty = retrieved_data["user_data"]["specialty"]
@@ -65,8 +64,8 @@ class VerifyMDCDetailsView(View):
                 "category": category,
             }
 
-            # Store the response_data in cache
-            cache.set(mdc_number, response_data)
+            # Store response_data in the session
+            request.session["response_data"] = response_data
 
             return response_data
 
