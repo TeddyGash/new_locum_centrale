@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 
 from config.settings.base import LOGIN_URL
+from keys import TELEGRAM_BOT_TOKEN
 
 from .forms import LocumForm, TeleconsultForm
 from .models import Locum, Teleconsults
@@ -65,7 +66,8 @@ class LocumCreateView(View):
             locum.save()
 
             # Send Telegram message
-            bot_token = "6318375842:AAEqij6jGjqJ7-tA8kZr6aV9pVbPdsk2LYM"
+            bot_token = TELEGRAM_BOT_TOKEN
+            # testgroup group_id
             chat_id = "-975701280"
             api_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
             link = request.build_absolute_uri(reverse("slots:locums"))
