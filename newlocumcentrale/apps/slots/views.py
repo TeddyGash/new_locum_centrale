@@ -1,5 +1,7 @@
+import requests
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render  # get_object_or_404
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 
@@ -61,7 +63,24 @@ class LocumCreateView(View):
             locum = form.save(commit=False)
             locum.posted_by = request.user
             locum.save()
-            return redirect("/slots/locums")  # Redirect to a success page or locum list view
+
+            # Send Telegram message
+            bot_token = "6318375842:AAEqij6jGjqJ7-tA8kZr6aV9pVbPdsk2LYM"
+            chat_id = "-975701280"
+            api_url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+            link = request.build_absolute_uri(reverse("slots:locums"))
+            message = f"New locum posted: [{locum}]({link})"
+            payload = {"chat_id": chat_id, "text": message, "parse_mode": "MarkdownV2"}
+            response = requests.post(api_url, json=payload)
+
+            if response.status_code == 200:
+                # Message sent successfully
+                return redirect("/slots/locums")  # Redirect to a success page or locum list view
+            else:
+                # Failed to send message
+                # Handle the error or display an appropriate message to the user
+                print("=======message not sent=============")
+
         return render(
             request,
             "slots/post_locum.html",
