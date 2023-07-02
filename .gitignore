@@ -280,3 +280,6 @@ newlocumcentrale/media/
 .env
 .envs/*
 !.envs/.local/
+
+# telegram token
+keys.py
